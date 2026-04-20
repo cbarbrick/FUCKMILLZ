@@ -363,6 +363,19 @@ HuggingFace \texttt{datasets} 2.14.
   \end{tabular}
 \end{table}
 
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{distilbert_cm.pdf}
+  \caption{Confusion matrix for fine-tuned DistilBERT on the
+    \texttt{dair-ai/emotion} test set. Rows are true labels and columns
+    are predictions; diagonal cells are correct classifications. Even
+    the rare classes \emph{love} and \emph{surprise} are classified
+    correctly in most cases, and the largest remaining confusion for
+    \emph{love} is with its semantically closest neighbor,
+    \emph{joy}.}
+  \label{fig:cm}
+\end{figure}
+
 \paragraph{Findings.} DistilBERT leads on both metrics, reaching
 92.9\% accuracy and 89.4 macro-F1, compared to 83.4\%/73.6 for TF-IDF
 $+$ Logistic Regression and 81.4\%/67.4 for Multinomial Naive Bayes. The
@@ -370,13 +383,13 @@ accuracy gap between the classical TF-IDF pipeline and DistilBERT is
 9.5~points, but the macro-F1 gap is 15.8~points---considerably larger,
 because the rare classes benefit the most from the transformer's
 contextual embeddings. On \emph{surprise}, the rarest class (only 3.6\%
-of training examples), DistilBERT achieves an F1 of 0.80, compared to
-just 0.42 for TF-IDF $+$ Logistic Regression and 0.21 for Naive Bayes.
-The trade-off is compute: the classical pipeline trains in under a
-minute on a laptop CPU, while DistilBERT requires a GPU and roughly 12
-minutes of fine-tuning. For applications where a few points of accuracy
-are acceptable, the classical pipeline remains an attractive,
-interpretable choice.
+of training examples), DistilBERT achieves an F1 of 0.80
+(\cref{fig:cm}), compared to just 0.42 for TF-IDF $+$ Logistic
+Regression and 0.21 for Naive Bayes. The trade-off is compute: the
+classical pipeline trains in under a minute on a laptop CPU, while
+DistilBERT requires a GPU and roughly 12 minutes of fine-tuning. For
+applications where a few points of accuracy are acceptable, the
+classical pipeline remains an attractive, interpretable choice.
 
 Naive Bayes trails by a large margin, especially on macro-F1, which is
 consistent with its word-independence assumption breaking down on
